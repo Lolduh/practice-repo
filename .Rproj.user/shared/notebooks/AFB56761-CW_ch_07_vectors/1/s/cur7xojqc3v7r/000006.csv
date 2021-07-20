@@ -1,0 +1,6 @@
+"0","# Confirm that basic types are stored in vectors"
+"0","is.character(""Andres"")"
+"1","[1]"
+"1"," TRUE"
+"1","
+"

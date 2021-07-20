@@ -1,0 +1,8 @@
+"0","# A function named `make_full_name` that takes two arguments"
+"0","# and returns the ""full name"" made from them"
+"0",""
+"0","make_full_name <- function(first_name, last_name) {"
+"0","  full_name <- paste(first_name, last_name)"
+"0","  full_name"
+"0","}"
+"0",""

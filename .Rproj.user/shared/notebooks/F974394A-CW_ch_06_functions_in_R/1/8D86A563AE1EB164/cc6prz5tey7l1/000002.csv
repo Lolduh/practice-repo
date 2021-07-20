@@ -1,0 +1,4 @@
+"0","# Install the `stringr` package. Only needs to be done once per computer"
+"0","# Already installed with the tidyverse"
+"0","# Load the package"
+"0","library(stringr)"

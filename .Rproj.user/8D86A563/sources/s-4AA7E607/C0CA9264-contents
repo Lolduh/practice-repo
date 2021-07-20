@@ -1,0 +1,368 @@
+---
+title: "Vectors"
+output: html_notebook
+---
+
+## What is a Vector?
+
+Vectors are one-dimensional collections of values that are all stored in a single variable. 
+
+**For example**, you can make a vector people that contains the character strings “Sarah”, “Amit”, and “Zhang”. 
+
+Alternatively, you could make a vector `one_to_seventy` that stores the numbers from 1 to 70. Each value in a vector is referred to as an element of that vector; thus the people vector would have three elements: “Sarah”, “Amit”, and “Zhang”. 
+
+Remember
+
+> All the elements in a vector need to have the same type (e.g., numeric, character, logical). You cannot have a vector whose elements include both numbers and character strings.
+
+**Coercion ( learn more later, when combining objects of different types)
+
+## Creating Vectors
+
+The easiest and most common syntax for creating vectors is to use the built-in `c()` function, which is used to combine values into a vector. The `c()` function takes in any number of arguments of the same type (separated by commas as usual), and returns a vector that contains those elements:
+
+```{r}
+# Use the `c()` function to create a vector of character values
+people <- c("Sarah", "Amit", "Zhang")
+print (people)
+```
+
+```{r}
+# Use the `c()` function to create a vector of numeric values
+numbers <- c(1, 2, 3, 4, 5)
+print(numbers)
+
+```
+
+When you print out a variable in R, the interpreter prints out a [1] before the value you have stored in your variable. When R prints a vector, it prints the elements separated with spaces (technically tabs), not commas. You can use the `length()` function to determine how many elements are in a vector:
+
+```{r}
+# Create and measure the length of a vector of character elements
+length(people)
+```
+
+```{r}
+# Create and measure the length of a vector of numeric elements
+length(numbers)
+
+```
+
+Other functions can also help with creating vectors. For example, the `seq()` function takes two arguments and produces a vector of the integers between them. An optional third argument specifies how many numbers to skip in each step:
+
+```{r}
+# Use the `seq()` function to create a vector of numbers 1 through 70
+one_to_seventy <- seq(1, 70)
+print (one_to_seventy)
+```
+
+```{r}
+# Make vector of numbers 1 through 10, counting by 2
+odds <- seq(1, 10, 2)
+print(odds)
+```
+
+As a shorthand, you can produce a sequence with the **colon operator** (`a:b`), which returns a vector from `a` to `b` with the element values being incremented by 1:
+
+```{r}
+# Use the `seq()` function to create a vector of numbers 1 through 70
+one_to_seventy<-seq(1:70)
+one_to_seventy
+```
+
+```{r}
+# Use the colon operator (:) as a shortcut for the `seq()` function
+
+```
+
+When you print out `one_to_seventy`, in addition to the leading `[1]` that you’ve seen in all printed results, there are bracketed numbers at the start of each line. These bracketed numbers tell you the starting position (index) of elements printed on that line. 
+
+
+## Vectorized Operation
+
+When performing operations (such as mathematical operations +, -, and so on) on vectors, the operation is applied to vector elements element-wise. 
+
+```{r}
+# Create two vectors to combine
+v1 <- c(3, 1, 4, 1, 5)
+v2 <- c(1, 6, 1, 8, 0)
+```
+
+```{r}
+# Create arithmetic combinations of the vectors
+v1 + v2
+v1 - v2
+v1*v2
+v1 / v2 
+```
+
+```{r}
+# Add a vector to itself (why not?)
+v2 + v2
+```
+
+07/14
+
+```{r}
+v1 ^ 3
+```
+
+
+
+
+
+## Recycling
+
+If R is tasked with performing a vectorized operation with two vectors of unequal length, it will reuse (recycle) elements from the shorter vector. 
+Example:
+
+```{r}
+# Create vectors to combine
+v1 <- c(1,3,5,1,5)
+v2<- c(1,2,1,2,1)
+# Add vectors
+v1 + v2
+```
+
+**Recycling** will occur no matter whether the longer vector is the first or the second operand.
+
+In either case, R will provide a warning message if the length of the longer vector is not a multiple of the shorter (so that there would be elements “**left over**” from recycling). 
+
+This warning does not necessarily mean you did something wrong, but you should pay attention to it because it may be indicative of an error (i.e., you thought the vectors were of the same length, but made a mistake somewhere).
+
+## Most everything is a Vector!
+
+What happens if you try to add a vector and a “regular” single value (a scalar)?”
+
+```{r}
+# Add a single value to a vector of values
+v1 <- 1:5
+v1 + 4
+```
+
+This sensible behavior occurs because R stores all **character**, **numeric**, and **Boolean values as vectors**. Even when you thought you were creating a single value (a scalar), you were actually creating a vector with a single element (length 1).
+
+When you create a variable storing the number 7 (e.g., `x <- 7`), R creates a vector of length 1 with the number 7 as that single element.
+
+```{r}
+# Confirm that basic types are stored in vectors
+is.character("Andres")
+```
+
+This is why R prints the [1] in front of all results: it’s telling you that it’s showing a vector (which happens to have one element) starting at element number 1.
+
+```{r}
+# Create a vector of length 1 in a variable `x`
+
+# Print out `x`: R displays the vector index (1) in the console
+
+```
+
+This behavior explains why you cannot use the `length()` function to get the length of a character string; it just returns the length of the vector containing that string (which is 1). Instead, you would use the `nchar()` function to get the number of characters in a character string.
+
+## Vectorized Functions
+
+Because all basic data types are stored as vectors, almost every function you’ve encountered so far can be applied to vectors, not just to single values. The function will result in a new vector where the function’s transformation has been *applied to each individual element* in order.
+
+```{r}
+# Create a vector of numbers
+nums <- c(3.98,10.8,3.27,5.21)
+
+# Perform the vectorized operation
+rounded_nums <- round(nums,1)
+# Print the results (each element is rounded)
+print (rounded_nums)
+```
+
+Vectorized operations such as these are also possible with character data. For example, the `nchar()` function, which returns the number of characters in a string, can be used equivalently for a vector of length 1 or a vector with many elements inside of it:
+
+```{r}
+# Create a character variable `introduction`, then count the number of characters
+introduction <- "hello"
+nchar(introduction)
+# Create a vector of `introductions`, then count the characters in each element
+introductions <- c("hello", "howdy", "hola")
+nchar(introductions)
+              
+```
+
+You can even use vectorized functions in which each argument is a vector. For example, the following code uses the `paste()` function to paste together elements in two different vectors. Just as the plus operator (+) performed element-wise addition, other vectorized functions such as `paste()` are also implemented element-wise:
+
+```{r}
+# Create a vector of two colors
+colors <- c("green", "blue")
+# Create a vector of two locations
+locations <- c("sky", "grass")
+# Use the vectorized paste() operation to paste together the vectors above
+paste(coplors, locations, )
+```
+
+## Vector Indices
+
+Vectors are the fundamental structure for storing collections of data. Yet, you often want to work with just some of the data in a vector. This section discusses a few ways that you can get a subset of elements in a vector.
+
+The simplest way that you can refer to individual elements in a vector is by their index, which is the number of their position in the vector. For example, in the vector.
+
+```{r}
+vowels <- c("a","e","i","o","u")
+```
+
+The "a" (the first element) is at index 1, "e" (the second element) is at index 2, and so on.
+
+You can **retrieve a value** from a vector using *bracket notation*. With this approach, you refer to the element at a particular index of a vector by writing the name of the vector, followed by **square brackets** (`[]`) that contain the index of interest:
+
+```{r}
+# Create the people vector
+people <- c("sarah","amit","zhang")
+# Access the element at index 1
+first_person <- people[1]
+# You can also use variables inside the brackets
+print(first_person)
+```
+ We can also extract the last index
+ 
+ 
+```{r}
+last_index <- length(people)
+last_person <- people[last_index]
+last_person
+```
+
+
+
+
+
+
+If you **specify an index** that is **out-of-bounds** (e.g., greater than the number of elements in the vector) in the square brackets, you will get back the special value **NA**, which stands for not available. Note that this is not the character string "NA", but rather a specific logical value.
+
+```{r}
+# Create the people vector
+
+# Create a vector of vowels
+
+# Attempt to access the 10th element
+vowels[10]
+```
+
+If you **specify a negative index** in the square brackets, R will return all elements **except** the (negative) index specified:
+
+```{r}
+# Create a vector of vowels
+
+
+# Return all elements EXCEPT that at index 2
+all_but_e <- vowels[-2]
+print(all_but_e)
+```
+
+## Vector Multiple Indices
+
+When you **specify an index by putting a single number inside the square brackets**, you’re actually putting a vector containing a single element into the brackets. You can put a vector of any length inside the brackets, and R will extract all the elements with those indices from the vector:
+
+```{r}
+# Create a `colors` vector
+colors <- c("red","blue", "green", "purple", "yellow")
+# Vector of indices (to extract from the `colors` vector)
+indices <- c(1,3,4)
+# Retrieve the colors at those indices
+colors[indices]
+# Specify the index vector anonymously
+colors[c(2,5)]
+```
+
+It’s common practice to use the *colon* operator to quickly **specify a range of indices** to extract:
+
+```{r}
+# Create a `colors` vector
+
+# Retrieve values in positions 2 through 5
+colors[2:5]
+```
+
+## Vector Filtering
+
+The previous examples used a vector of indices (**numeric values**) to retrieve a subset of elements from a vector. 
+
+Alternatively, you can put a vector of logical (**boolean**) values (e.g., `TRUE` or `FALSE`) inside the square brackets to specify which elements you want to return — TRUE in the corresponding position means return that element and `FALSE` means do not return that element:
+
+```{r}
+# Create a vector of shoe sizes
+shoe_sizes <- c(5.5,11,7,8,4)
+# Vector of booleans (to filter the `shoe_sizes` vector)
+filter <- c(TRUE, FALSE, FALSE,FALSE, TRUE )
+# Extract every element in an index that is TRUE
+print(shoe_sizes)
+```
+
+R will go through the **boolean** vector and extract every item at the same position as a `TRUE`. Since filter is `TRUE` at indices `1` and `5`, then `shoe_sizes[filter]` returns a vector with the elements from indices 1 and 5. This actually is incredibly powerful because it lets you select elements from a vector that meet a certain criteria—a process called filtering. 
+
+```{r}
+# Create a vector of shoe sizes
+
+# Create a boolean vector that indicates if a shoe size is less than 6.5
+shoe_is_small <- shoe_sizes < 6.5
+# Use the `shoe_is_small` vector to select small shoes
+shoe_sizes[shoe_is_small]
+```
+
+The magic here is that you are once again using recycling: the relational operator `<` is vectorized, meaning that the shorter vector is recycled and applied to each element in the `shoe_sizes` vector, thus producing the boolean vector that you want
+
+```{r}
+# Create a vector of shoe sizes
+
+# Select shoe sizes that are smaller than 6.5
+shoe_sizes[shoe_sizes<6.5]
+
+```
+
+## Modifying Vectors
+
+**Most operations applied to vectors will create a new vector** with the modified values. This is the most common process you will use in R. However, it is also possible to manipulate the contents of an existing vector in various ways. You can assign an element at a particular vector index a new value by specifying the index on the left-hand side of the operation:
+
+```{r}
+# Create a `colors` vector
+
+# Create a vector `prices`
+
+# Change the first price to 20
+
+```
+
+To **create a new element** in your vector, you need to specify the index in which you want to store the new value:
+
+```{r}
+# Create a vector `prices`
+
+# Add a fourth price
+
+# Add a new price (35) to the end of the vector
+
+```
+
+If you try to modify an element at an index that is greater than the length of the vector, R will fill the vector with `NA` values:
+
+```{r}
+# Create a vector `prices`
+
+# Set the sixth element in the vector to have the value 60
+
+```
+
+Since keeping track of indices can be difficult (and may easily change with your data, making the code fragile), a better approach for adding information at the end of a vector is to create a new vector by combining an existing vector with new elements:
+
+```{r}
+# Use the combine (`c()`) function to create a vector
+
+# Use the `c()` function to combine the `people` vector and the name "Josh"
+
+```
+
+The **vector modification** can be combined with vector filtering to allow you to replace a specific subset of values. 
+For example, you could replace all values in a vector that were greater than 10 with the number 10 (to “**cap**” the values). Because the assignment operator is vectorized, you can leverage recycling to assign a single value to each element that has been filtered from the vector:
+
+```{r}
+# Create a vector of values
+
+# Replace all values greater than 10 with 10
+
+```
+

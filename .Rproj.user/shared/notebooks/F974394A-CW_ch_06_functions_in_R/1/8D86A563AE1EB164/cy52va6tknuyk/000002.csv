@@ -1,0 +1,4 @@
+"0","# A function to calculate the area of a rectangle"
+"0","calculate_rect_area <- function(width, height){"
+"0","  return(width*height)"
+"0","}"

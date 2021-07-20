@@ -1,0 +1,7 @@
+"0","# Alternatively, you can store a condition (as a TRUE/FALSE value)"
+"0","# in a variable"
+"0","too_cold <- porridge_temp < 70"
+"0","# If the condition `too_cold` is TRUE, enter the code block"
+"0","if (too_cold) {"
+"0","  print(""this food is too cold"")"
+"0","}"

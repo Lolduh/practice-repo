@@ -1,0 +1,57 @@
+---
+title: "Chapter 8 classwork examples"
+output: html_notebook
+---
+
+**Making A list in R**
+```{r}
+person<- list(
+  first_name= "Ada",
+  job= "Programmer",
+  salary = 78000,
+  in_union= TRUE,
+  favorites= list(
+    music = "jazz",
+    food = "pizza"
+  )
+)
+print(person)
+```
+
+
+
+
+$$Data Frames$$ 
+Chapter 10
+
+
+- vectors
+
+- lists
+
+-data frame
+let me explore one built in data frame
+
+```{r}
+#call a built in data frame
+cars
+```
+ask about the class of the object 'cars'
+
+```{r}
+class(cars)
+```
+
+checking the dimensions of this data frame
+
+```{r}
+dim(cars)
+```
+
+
+
+
+
+
+
+
